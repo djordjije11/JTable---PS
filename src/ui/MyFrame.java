@@ -25,6 +25,7 @@ public class MyFrame extends javax.swing.JFrame {
      */
     public MyFrame() {
         setTitle("JTable example");
+        setResizable(false);
         initComponents();
         lblMessage.setForeground(Color.red);
         initializeTable();
