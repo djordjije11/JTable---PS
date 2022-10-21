@@ -17,26 +17,21 @@ import javax.swing.table.AbstractTableModel;
  * @author Djordjije
  */
 public class MyTableModel extends AbstractTableModel {
-
     private List<Person> persons;
     private final String[] columnNames = {"First name", "Last name", "Birthday", "City", "Gender", "Married", "JMBG"};
     private final Class[] columnTypes = {String.class, String.class, LocalDate.class, City.class, Gender.class, Boolean.class, String.class};
-    
     public MyTableModel(Collection<Person> persons){
         this.persons = (List<Person>) persons;
     }
-    
     @Override
     public int getRowCount() {
         if(persons == null) return 0;
         return persons.size();
     }
-
     @Override
     public int getColumnCount() {
-        return 7;
+        return columnNames.length;
     }
- 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Person person = persons.get(rowIndex);
@@ -59,23 +54,19 @@ public class MyTableModel extends AbstractTableModel {
                 return "n/a";
         }
     }
-
     @Override
     public String getColumnName(int column) {
         return columnNames[column];
     }
-
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return columnTypes[columnIndex];
     }
-
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         if(columnIndex == 0 || columnIndex == 1 || columnIndex == 5) return true;
         else return false;
     }
-
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Person person = persons.get(rowIndex);
@@ -95,16 +86,13 @@ public class MyTableModel extends AbstractTableModel {
                 break;
         }
     }
-    
     public void addPerson(Person person){
         persons.add(person);
         fireTableDataChanged();
     }
-    
     public boolean personExists(Person person){
         return persons.contains(person);
     }
-    
     public void removePerson(int rowIndex){
         persons.removeIf(person -> person.getJmbg().equals(getValueAt(rowIndex, 6).toString()));
         fireTableDataChanged();
